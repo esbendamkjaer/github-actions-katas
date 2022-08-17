@@ -44,6 +44,6 @@ jobs:
           name: code
           path: .
       - name: Builder image
-        run: chmod +x ci/build-image.sh && ci/build-image.sh
+        run: chmod +x ci/build-docker.sh && ci/build-docker.sh
       - name: Push image
-        run: chmod +x ci/push-image.sh && ci/push-image.sh
+        run: chmod +x ci/push-docker.sh && ci/push-docker.sh
