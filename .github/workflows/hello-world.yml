@@ -1,5 +1,8 @@
 name: Java CI
 on: push
+env:
+  docker_username: ${{ secrets.DOCKER_USERNAME }}
+  docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   Clone-down:
     name: Clone down repo
@@ -31,3 +34,16 @@ jobs:
         with:
           name: code
           path: .
+  Build-image:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: code
+          path: .
+      - name: Builder image
+        run: chmod +x ci/build-image.sh && ci/build-image.sh
+      - name: Push image
+        run: chmod +x ci/push-image.sh && ci/push-image.sh
